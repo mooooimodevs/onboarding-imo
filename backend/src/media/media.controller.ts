@@ -130,17 +130,8 @@ export class MediaController {
   @Get(':id/view')
   @ApiOperation({ summary: 'View a media file (Public)' })
   async viewFile(@Param('id') id: string, @Res() res: Response) {
-    const media = await this.mediaService.findOne(+id);
-    const s3File = await this.mediaService.getFileStream(+id);
-
-    res.setHeader('Content-Type', media.mimetype);
-    res.setHeader(
-      'Content-Disposition',
-      `inline; filename="${media.filename}"`,
-    );
-
-    const buffer = await s3File.arrayBuffer();
-    res.send(Buffer.from(buffer));
+    const url = await this.mediaService.getSignedUrl(+id);
+    return res.redirect(302, url);
   }
 
   @Get(':id/stream')
@@ -161,19 +152,8 @@ export class MediaController {
       throw new ForbiddenException('You do not have access to this media');
     }
 
-    const s3File = await this.mediaService.getFileStream(+id);
-
-    res.setHeader('Content-Type', media.mimetype);
-    res.setHeader(
-      'Content-Disposition',
-      `inline; filename="${media.filename}"`,
-    );
-
-    // Bun's S3File is a Blob, we can get an ArrayBuffer and send it
-    // Or we can use Bun.write(res, s3File) if supported,
-    // but in NestJS/Express, streaming the arrayBuffer is safe.
-    const buffer = await s3File.arrayBuffer();
-    res.send(Buffer.from(buffer));
+    const url = await this.mediaService.getSignedUrl(+id);
+    return res.redirect(302, url);
   }
 
   @Delete(':id')
