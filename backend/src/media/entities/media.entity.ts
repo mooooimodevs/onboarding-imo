@@ -39,6 +39,10 @@ export class Media {
   path: string;
 
   @ApiProperty({ nullable: true })
+  @Column({ type: 'int', nullable: true })
+  depotFileId: number;
+
+  @ApiProperty({ nullable: true })
   @Column({ type: 'varchar', nullable: true })
   url: string;
 
