@@ -41,6 +41,12 @@ export default defineConfig({
       },
       workbox: {
         navigateFallback: '/index.html',
+        // Backend-proxied paths are NOT SPA routes — let the browser navigate to
+        // them over the network (Caddy -> backend) instead of serving index.html.
+        // Without this the service worker hijacks a full-page nav to an /api
+        // endpoint (e.g. an OAuth/SSO redirect or file download) and renders the
+        // SPA 404 instead of letting the browser reach the backend.
+        navigateFallbackDenylist: [/^\/api\//, /^\/socket\.io\//],
         globPatterns: ['**/*.{js,css,html,ico,svg}'],
         maximumFileSizeToCacheInBytes: 4 * 1024 * 1024, // 4 MiB
         runtimeCaching: [
