@@ -16,7 +16,7 @@ export class RevokedSsoSession {
   @Column({ unique: true })
   sid: string;
 
-  @Column({ nullable: true })
+  @Column({ type: 'varchar', nullable: true })
   sub: string | null;
 
   @CreateDateColumn()

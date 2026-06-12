@@ -23,7 +23,7 @@ export class Media {
   filename: string;
 
   @ApiProperty()
-  @Column({ nullable: true })
+  @Column({ type: 'varchar', nullable: true })
   originalName: string;
 
   @ApiProperty()
@@ -35,23 +35,23 @@ export class Media {
   size: number;
 
   @ApiProperty({ nullable: true })
-  @Column({ nullable: true })
+  @Column({ type: 'varchar', nullable: true })
   path: string;
 
   @ApiProperty({ nullable: true })
-  @Column({ nullable: true })
+  @Column({ type: 'varchar', nullable: true })
   url: string;
 
   @ApiProperty({ nullable: true })
-  @Column({ nullable: true })
+  @Column({ type: 'varchar', nullable: true })
   driveId: string;
 
   @ApiProperty({ nullable: true })
-  @Column({ nullable: true })
+  @Column({ type: 'varchar', nullable: true })
   webviewLink: string;
 
   @ApiProperty({ nullable: true })
-  @Column({ nullable: true })
+  @Column({ type: 'int', nullable: true })
   userId: number;
 
   @ApiProperty()

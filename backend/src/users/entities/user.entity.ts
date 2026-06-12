@@ -34,11 +34,11 @@ export class User {
   password: string;
 
   @ApiProperty({ nullable: true })
-  @Column({ nullable: true })
+  @Column({ type: 'varchar', nullable: true })
   fullname: string;
 
   @ApiProperty({ nullable: true })
-  @Column({ nullable: true })
+  @Column({ type: 'varchar', nullable: true })
   phone: string;
 
   @ApiProperty({ type: () => Media, nullable: true })

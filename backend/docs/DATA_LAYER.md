@@ -39,7 +39,7 @@ export class Role {
   name: string;
 
   @ApiProperty({ nullable: true })
-  @Column({ nullable: true })
+  @Column({ type: 'varchar', nullable: true })
   description: string;
 
   @ApiProperty({ type: () => [Permission] })
@@ -69,6 +69,12 @@ Conventions:
 - **Timestamps** on every entity: `@CreateDateColumn`, `@UpdateDateColumn`.
 - **Soft delete** on every entity: `@DeleteDateColumn() deletedAt`. TypeORM excludes
   soft-deleted rows from normal reads automatically.
+- **Always set an explicit `type` on nullable columns.** A field typed `T | null`
+  reflects as `Object` under `emitDecoratorMetadata`, and TypeORM can't map it —
+  the app throws `DataTypeNotSupportedError` on boot (worse: only in the compiled
+  build, so it passes in dev and fails in prod). Write `@Column({ type: 'int',
+  nullable: true })` / `{ type: 'varchar', nullable: true }`, never a bare
+  `@Column({ nullable: true })`.
 - **`@Index()`** on frequently searched/looked-up columns (`name`, `email`).
 - **`@ApiProperty()`** on every field you want in the Swagger schema. Omit it (and add
   `@Exclude()` from `class-transformer`) for secrets:

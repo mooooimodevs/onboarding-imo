@@ -23,7 +23,7 @@ export class Permission {
   name: string;
 
   @ApiProperty({ nullable: true })
-  @Column({ nullable: true })
+  @Column({ type: 'varchar', nullable: true })
   description: string;
 
   @ManyToMany(() => Role, (role) => role.permissions)

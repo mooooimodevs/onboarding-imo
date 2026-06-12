@@ -27,7 +27,7 @@ export class Invitation {
   roleIds: number[] | null;
 
   @ApiPropertyOptional()
-  @Column({ nullable: true })
+  @Column({ type: 'int', nullable: true })
   invitedBy: number | null;
 
   @ApiProperty()

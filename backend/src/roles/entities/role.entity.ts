@@ -25,7 +25,7 @@ export class Role {
   name: string;
 
   @ApiProperty({ nullable: true })
-  @Column({ nullable: true })
+  @Column({ type: 'varchar', nullable: true })
   description: string;
 
   @ManyToMany(() => User, (user) => user.roles)

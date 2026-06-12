@@ -25,7 +25,7 @@ export class Notification {
   id: number;
 
   @ApiProperty({ nullable: true })
-  @Column({ nullable: true })
+  @Column({ type: 'int', nullable: true })
   @Index()
   userId: number;
 
@@ -35,12 +35,12 @@ export class Notification {
   user: User;
 
   @ApiProperty({ nullable: true })
-  @Column({ nullable: true })
+  @Column({ type: 'varchar', nullable: true })
   @Index()
   targetRole: string;
 
   @ApiProperty({ nullable: true })
-  @Column({ nullable: true })
+  @Column({ type: 'int', nullable: true })
   @Index()
   actorId: number;
 
@@ -65,7 +65,7 @@ export class Notification {
   isRead: boolean;
 
   @ApiProperty({ nullable: true })
-  @Column({ nullable: true })
+  @Column({ type: 'varchar', nullable: true })
   link: string;
 
   @ApiProperty()
