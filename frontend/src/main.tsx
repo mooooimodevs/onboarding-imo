@@ -44,21 +44,26 @@ declare module '@tanstack/react-router' {
 
 // Render the app
 const rootElement = document.getElementById('app')
-const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID || ''
+// Google login is optional: only enabled when VITE_GOOGLE_CLIENT_ID is set.
+const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID
 
 if (rootElement && !rootElement.innerHTML) {
-  console.log('App Initialization - Google Client ID:', GOOGLE_CLIENT_ID ? 'Present' : 'Missing')
   const root = ReactDOM.createRoot(rootElement)
+  const app = (
+    <TanStackQueryProvider.Provider {...TanStackQueryProviderContext}>
+      <HeroUIProvider>
+        <ConfirmationRoot />
+        <RouterProvider router={router} />
+      </HeroUIProvider>
+    </TanStackQueryProvider.Provider>
+  )
   root.render(
     <StrictMode>
-      <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
-        <TanStackQueryProvider.Provider {...TanStackQueryProviderContext}>
-          <HeroUIProvider>
-            <ConfirmationRoot />
-            <RouterProvider router={router} />
-          </HeroUIProvider>
-        </TanStackQueryProvider.Provider>
-      </GoogleOAuthProvider>
+      {GOOGLE_CLIENT_ID ? (
+        <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>{app}</GoogleOAuthProvider>
+      ) : (
+        app
+      )}
     </StrictMode>,
   )
 }
